@@ -1,0 +1,22 @@
+version: "3.5"
+
+volumes:
+  data:
+
+
+services:
+  notes_auth:
+    network_mode: host
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: notes_auth
+    hostname: notes_auth
+    ports:
+      - 8081:8081
+    volumes:
+      - .:/app
+    environment:
+      - PORT=8081
+      - DATABASE_URL=mysql://root:root@0.0.0.0:3306/ms_notes_auth?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      - ACCESS_TOKEN_SECRET="ms_notes_authentication_signature"

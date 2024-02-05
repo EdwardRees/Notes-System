@@ -1,15 +1,24 @@
 {
   "name": "notes-api",
-  "module": "index.ts",
+  "module": "src/index.ts",
+  "version": "0.0.1",
   "type": "module",
   "devDependencies": {
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "drizzle-kit": "^0.20.10"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@elysiajs/jwt": "^0.8.0",
+    "crypto": "^1.0.1",
+    "drizzle-orm": "^0.29.3",
     "elysia": "^0.7.15",
-    "prisma": "^5.4.1"
+    "postgres": "^3.4.3"
+  },
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "generate": "drizzle-kit generate:pg"
   }
 }

@@ -1,20 +1,15 @@
 use crate::db::establish_connection;
 use crate::models::schema::auth_users;
 use crate::models::user::User;
+use crate::models::request::Request;
+use crate::models::claims::Claims;
 use bcrypt::hash;
 use diesel::prelude::*;
 use dotenv::dotenv;
 use jsonwebtoken as jwt;
-use serde::{Deserialize, Serialize};
 use std::env;
 
-#[derive(Debug, Deserialize, Serialize)]
-pub struct SignupRequest {
-    email: String,
-    password: String,
-}
-
-pub async fn signup(info: SignupRequest) -> String {
+pub async fn signup(info: Request) -> String {
     dotenv().ok();
     let email: &String = &info.email;
     let password: &String = &info.password;
@@ -31,6 +26,12 @@ pub async fn signup(info: SignupRequest) -> String {
         updated_at: chrono::Local::now().naive_local(),
     };
 
+    let my_claims = Claims {
+        sub: new_user.id.to_owned(),
+        iat: jwt::get_current_timestamp(),
+        exp: jwt::get_current_timestamp() + (60 * 60 * 24 * 14)
+    };
+
     // insert new user to database
     diesel::insert_into(auth_users::table)
         .values(&new_user)
@@ -40,7 +41,8 @@ pub async fn signup(info: SignupRequest) -> String {
     // create jwt token from user
     let jwt_token = jwt::encode(
         &jwt::Header::new(jwt::Algorithm::HS256),
-        &new_user.id.to_string(),
+        &my_claims,
+        // &new_user.id.to_string(),
         &jwt::EncodingKey::from_secret(access_token_secret.as_bytes()),
     );
 

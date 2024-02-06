@@ -16,13 +16,13 @@ async fn health() -> impl Responder {
 }
 
 #[post("/v1/signup")]
-async fn signup_path(info: web::Json<util::signup::SignupRequest>) -> impl Responder {
+async fn signup_path(info: web::Json<models::request::Request>) -> impl Responder {
     let data = util::signup::signup(info.into_inner()).await;
     HttpResponse::Ok().body(data)
 }
 
 #[post("/v1/login")]
-async fn login_path(info: web::Json<util::login::LoginRequest>) -> impl Responder {
+async fn login_path(info: web::Json<models::request::Request>) -> impl Responder {
     let data = util::login::login(info.into_inner()).await;
     HttpResponse::Ok().body(data)
 }

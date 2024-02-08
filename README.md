@@ -22,15 +22,15 @@ This is a simple Microservice example with four backends. These backends consist
 ### Todos Service 
 
 - Python
+- FastAPI
 - SQLAlchemy
 - PostgreSQL
-- FastAPI
 
 ### User Profile Service 
 
 - Go
-- Gorm 
 - Fiber
+- Gorm 
 - PostgreSQL
 
 ### Client 

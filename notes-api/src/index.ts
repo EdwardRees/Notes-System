@@ -12,9 +12,9 @@ const app = new Elysia()
       secret: process.env.JWT_SECRET
     })
   )
-  .get("/v2/", () => "Hello from the Notes API")
-  .get("/v2/health", () => "Health!")
-  .group("/v2/notes", (app) => notes_routes(app))
+  .get("/v1/", () => "Hello from the Notes API")
+  .get("/v1/health", () => "Health!")
+  .group("/v1/notes", (app) => notes_routes(app))
   .listen(port);
 
 console.info(

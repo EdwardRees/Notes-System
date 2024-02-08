@@ -24,6 +24,7 @@ This is a simple Microservice example with four backends. These backends consist
 - Python
 - SQLAlchemy
 - PostgreSQL
+- FastAPI
 
 ### User Profile Service 
 

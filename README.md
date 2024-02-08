@@ -30,6 +30,7 @@ This is a simple Microservice example with four backends. These backends consist
 - Go
 - Gorm 
 - Fiber
+- PostgreSQL
 
 ### Client 
 

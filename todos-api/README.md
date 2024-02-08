@@ -26,17 +26,25 @@ git clone
 python3 -m venv venv
 ```
 
-3. Install dependencies
+3. Activate the virtual environment
+
+```bash
+source venv/bin/activate
+```
+
+4. Install dependencies
 
 ```bash
 pip3 install -r requirements.txt
 ```
 
-4. Create a `.env` file in the root directory and add the following environment variables
+5. Create a `.env` file in the root directory and add the following environment variables
 
 ```bash
-FLASK_APP=app.py
-FLASK_ENV=development
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/todos
 PORT=8083
 ```
+
+## Running
+
+In the terminal, run `python3 src/main.py` or `python3 src/`

@@ -1,0 +1,43 @@
+volumes:
+  data:
+
+services:
+  profile_db:
+    image: postgres:latest
+    container_name: profile_db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=ms_user_profiledb
+    networks:
+      - notes
+
+  notes_user_profile:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: notes_user_profile
+    hostname: notes_user_profile
+    ports:
+      - 8084:8084
+    volumes:
+      - .:/app
+    environment:
+      - PORT=8084
+      - DB_HOST=profile_db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=ms_user_profiledb
+    depends_on:
+      - profile_db
+    networks:
+      - notes
+networks:
+  notes:
+    driver: bridge
+

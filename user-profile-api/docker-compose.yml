@@ -14,7 +14,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=ms_user_profiledb
     networks:
-      - notes
+      - notes_profile
 
   notes_user_profile:
     build:
@@ -36,8 +36,11 @@ services:
     depends_on:
       - profile_db
     networks:
+      - notes_profile
       - notes
 networks:
+  notes_profile:
+    driver: bridge
   notes:
     driver: bridge
 

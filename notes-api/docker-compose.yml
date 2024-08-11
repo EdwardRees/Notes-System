@@ -1,0 +1,42 @@
+volumes:
+  data:
+
+services:
+  notes_db:
+    image: postgres:latest
+    container_name: notes_db 
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=ms_notesdb
+    networks:
+      - notes_notes
+  notes_notes:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: notes_notes
+    hostname: notes_notes
+    ports:
+      - 8083:8083
+    volumes:
+      - .:/app  
+    environment:
+      - PORT=8083
+      - JWT_SECRET="ms_notes_authentication_signature"
+      - DATABASE_URL="postgresql://postgres:@notes_db:5432/ms_notesdb?schema=public"
+    depends_on:
+      - notes_db
+    networks:
+      - notes_notes
+      - notes
+networks:
+  notes_notes:
+    driver: bridge
+  notes:
+    driver: bridge
+    
